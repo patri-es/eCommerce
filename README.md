@@ -11,24 +11,31 @@ eCommerce es una aplicación para gestionar productos y categorías. La solució
 - **eCommerce.Frontend**: SPA React servida y compilada con Vite.
 
 La solución es `eCommerce.sln` y está en la raíz del repositorio. Los cinco proyectos se encuentran bajo `src/`.
-
 ## Requisitos previos
 
-- .NET SDK 10.
-- Node.js LTS y npm.
-- SQL Server, LocalDB u otra base de datos compatible configurada en la API.
-- `dotnet-ef` para aplicar migraciones, si no se utiliza una instalación local o restaurada mediante herramientas .NET.
+| Herramienta | Versión mínima | Verificar |
+| --- | --- | --- |
+| **.NET SDK** | 10+ | `dotnet --version` |
+| **Node.js** | 22+ (LTS) | `node --version` |
+| **npm** | 10+ | `npm --version` |
+| **Git** | 2.40+ | `git --version` |
+| **SQL Server** | Según la instancia utilizada | |
+
+> SQL Server puede sustituirse por LocalDB u otra base de datos compatible, siempre que la instancia sea accesible y la cadena de conexión esté correctamente configurada en la API (en appsettings.json).
+>
+> En Windows, puedes consultar las instalaciones disponibles mediante `Get-Service *SQL*`, `where.exe sqlcmd` o `sqllocaldb info`.
 
 ## Instalación y ejecución
 
-Todos los comandos siguientes se ejecutan desde la raíz del repositorio (`C:\Users\tpmancilla\source\repos\eCommerce`).
+Todos los comandos siguientes se ejecutan desde la raíz del repositorio
+(`C:\Users\tpmancilla\source\repos\eCommerce`).
 
 ### Backend
 
 ```powershell
 dotnet restore
 dotnet build
-dotnet run --project src/eCommerce.API/eCommerce.API.csproj
+dotnet run --project src/API/eCommerce.API.csproj
 ```
 
 La API está disponible en `http://localhost:5295`. El perfil HTTPS también utiliza `https://localhost:7049`.
@@ -36,22 +43,22 @@ La API está disponible en `http://localhost:5295`. El perfil HTTPS también uti
 Para aplicar las migraciones, `eCommerce.Infrastructure` es el proyecto de migraciones y `eCommerce.API` es el proyecto de inicio:
 
 ```powershell
-dotnet ef database update --project src/eCommerce.Infrastructure/eCommerce.Infrastructure.csproj --startup-project src/eCommerce.API/eCommerce.API.csproj
+dotnet ef database update --project src/Infrastructure/eCommerce.Infrastructure.csproj --startup-project src/API/eCommerce.API.csproj
 ```
 
-La cadena de conexión y las opciones de la API se configuran en `src/eCommerce.API/appsettings.json` y `appsettings.Development.json`. En entornos de despliegue deben utilizarse variables de entorno o secretos.
+La cadena de conexión y las opciones de la API se configuran en `src/API/appsettings.json` y `appsettings.Development.json`. En entornos de despliegue deben utilizarse variables de entorno o secretos.
 
 ### Frontend
 
 El frontend forma parte de la solución, pero sus dependencias y scripts se gestionan con npm:
 
 ```powershell
-cd src/eCommerce.Frontend
+cd src/Frontend
 npm ci
 npm run dev
 ```
 
-Por defecto, Vite sirve la aplicación en `http://localhost:5173`. La URL de la API se configura en `src/eCommerce.Frontend/.env.local`:
+Por defecto, Vite sirve la aplicación en `http://localhost:5173`. La URL de la API se configura en `src/Frontend/.env.local`:
 
 ```env
 VITE_BASE_API_URL=https://localhost:7049/api
@@ -66,6 +73,10 @@ Scripts disponibles:
 - `npm run preview`: sirve la compilación generada.
 - `npm run lint`: ejecuta ESLint.
 
+> Si utilizas Visual Studio, puedes seleccionar el perfil de inicio API and Frontend para ejecutar simultáneamente la API y el Frontend mediante F5.
+>
+> La configuración de inicio de dicho perfil se encuentra en `eCommerce.slnLaunch` 
+
 ## Estructura del repositorio
 
 ```text
@@ -73,38 +84,37 @@ eCommerce/
 ├── eCommerce.sln
 ├── README.md
 └── src/
-    ├── eCommerce.API/
+    ├── API/
     │   ├── Controllers/
     │   ├── Exceptions/
     │   ├── Properties/
     │   ├── Program.cs
     │   └── appsettings.json
-    ├── eCommerce.Application/
+    ├── Application/
     │   ├── Category/
     │   ├── Exceptions/
     │   ├── Product/
     │   └── DependencyInjection.cs
-    ├── eCommerce.Domain/
+    ├── Domain/
     │   ├── Entities/
     │   └── Exceptions/
-    ├── eCommerce.Infrastructure/
+    ├── Infrastructure/
     │   ├── Migrations/
     │   ├── Persistence/
     │   │   ├── Configurations/
     │   │   └── Repositories/
     │   └── DependencyInjection.cs
-    └── eCommerce.Frontend/
+    └── Frontend/
         ├── public/
         ├── src/
         │   ├── assets/
         │   ├── components/
         │   └── pages/
+        ├── .env.local
         ├── package.json
         ├── package-lock.json
         └── vite.config.js
 ```
-
-La documentación específica del frontend está en `src/eCommerce.Frontend/README.md`.
 
 ## Buenas prácticas
 
@@ -115,8 +125,9 @@ La documentación específica del frontend está en `src/eCommerce.Frontend/READ
 
 
 ## Futuras implementaciones:
-1. Autenticación 
-2. Cart (Carrito)
-3. Order (pedido)
-4. ClientSettings (página de usuario)
-5. OrderSettings (página de gestion de pedidos)
+1. Test para el Frontend
+2. Autenticación 
+3. Cart (Carrito)
+4. Order (pedido)
+5. ClientSettings (página de usuario)
+6. OrderSettings (página de gestion de pedidos)
