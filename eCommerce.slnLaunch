@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Development",
+    "Projects": [
+      {
+        "Path": "src\\API\\eCommerce.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\Frontend\\eCommerce.Frontend.csproj",
+        "Action": "Start",
+        "DebugTarget": "Frontend"
+      }
+    ]
+  }
+]
