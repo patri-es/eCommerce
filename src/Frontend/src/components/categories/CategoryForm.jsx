@@ -82,7 +82,7 @@ const CategoryForm = ({ methods, onFormReset, onFormSubmit }) => {
 
                         {errors.code?.type === 'maxLength' &&
                             <p className="mt-1 text-sm text-red-600 flex items-center">
-                                code can not exceed 50 characters
+                                code can not exceed 30 characters
                             </p>}
                     </div>
 
