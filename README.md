@@ -111,7 +111,7 @@ Los tests del Backend y del Frontend se ejecutan por separado desde la raíz del
 - **Backend** (.NET):
 
 ```powershell
-dotnet test .\Tests\eCommerce.Tests.csproj
+dotnet test --results-directory .\Tests\TestResults
 ```
 
 - **Frontend** (Vitest): requiere haber instalado previamente las dependencias con `npm ci` en `src/Frontend`.
@@ -125,6 +125,16 @@ npm test
 
 Los resultados de cada suite se muestran en la consola. Vitest informa de los archivos y casos ejecutados, y de si pasan o fallan.
 
+## 🧩 Organización de los tests
+
+### Backend (.NET)
+
+El proyecto `tests/eCommerce.Tests.csproj` agrupa las pruebas automatizadas de las capas del Backend. Los archivos se organizan por capa y cubren reglas de dominio, casos de uso, repositorios y controladores. Las pruebas de Infrastructure comparten fixtures para la base de datos, mientras que las de API usan una fábrica de aplicación para sus pruebas HTTP.
+
+### Frontend (React/Vitest)
+
+Las pruebas de la SPA se encuentran dentro de `src/Frontend/tests`, junto al `package.json` que gestiona sus dependencias. Se organizan por área: `services` para llamadas HTTP, `utils` para utilidades, y carpetas por feature como `navigation`, `products` y `categories` para componentes y flujos de interfaz. Vitest es independiente del runner .NET y se ejecuta con `npm test` desde `src/Frontend`.
+
 ## 📁 Estructura del repositorio
 
 ```text
@@ -134,6 +144,22 @@ eCommerce/
 ├── eCommerce.sln
 ├── eCommerce.slnLaunch
 ├── README.md
+├── Tests/
+│   ├── API/
+│   │   ├── CategoryControllerTests.cs
+│   │   ├── CustomWebApplicationFactory.cs
+│   │   └── ProductControllerTests.cs
+│   ├── Application/
+│   │   ├── Categories/CategoryUseCasesTests.cs
+│   │   └── Products/ProductUseCasesTests.cs
+│   ├── Domain/
+│   │   ├── Categories/CategoryTests.cs
+│   │   └── Products/ProductTests.cs
+│   ├── Infrastructure/
+│   │   ├── CategoryRepositoryTests.cs
+│   │   ├── DataBaseFixture.cs
+│   │   └── ProductRepositoryTests.cs
+│   └── eCommerce.Tests.csproj
 └── src/
     ├── API/
     │   ├── Controllers/
@@ -163,11 +189,19 @@ eCommerce/
         │   ├── components/
         │   └── pages/
         ├── tests/
+        │   ├── setup.js
         │   ├── categories/
+        │   │   └── CategoryForm.test.jsx
         │   ├── navigation/
+        │   │   └── Navbar.test.jsx
         │   ├── products/
+        │   │   ├── ProductCatalog.test.jsx
+        │   │   └── ProductForm.test.jsx
         │   ├── services/
+        │   │   ├── categoryService.test.js
+        │   │   └── productService.test.js
         │   └── utils/
+        │       └── errorHelper.test.js
         ├── .env.local          # Configuración local (no versionada)
         ├── package.json
         ├── package-lock.json
@@ -184,7 +218,7 @@ eCommerce/
 
 ## 🔮 Futuras implementaciones
 
-1. Tests para el Frontend.
+1. Ampliar la cobertura de pruebas del Frontend.
 2. Autenticación.
 3. Cart (carrito).
 4. Order (pedidos).
