@@ -31,7 +31,7 @@ const ProductForm = ({ methods, onFormReset, onFormSubmit, isEditing }) => {
                         <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                             Name
                         </label>
-                        <input type="text" placeholder="Enter name"
+                        <input id="name" type="text" placeholder="Enter name"
                             {...register("name", {
                                 required: true,
                                 maxLength: 100
@@ -53,7 +53,7 @@ const ProductForm = ({ methods, onFormReset, onFormSubmit, isEditing }) => {
                         <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
                             Description
                         </label>
-                        <input type="text" placeholder="Enter description"
+                        <input id="description" type="text" placeholder="Enter description"
                             {...register("description", {
                                 required: false,
                                 maxLength: 500
@@ -71,7 +71,7 @@ const ProductForm = ({ methods, onFormReset, onFormSubmit, isEditing }) => {
                         <label htmlFor="imageUrl" className="block text-sm font-semibold text-gray-700 mb-2">
                             Image URL
                         </label>
-                        <input type="text" placeholder="Enter image URL"
+                        <input id="imageUrl" type="text" placeholder="Enter image URL"
                             {...register("imageUrl", {
                                 required: true,
                                 maxLength: 500
@@ -93,7 +93,7 @@ const ProductForm = ({ methods, onFormReset, onFormSubmit, isEditing }) => {
                         <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-2">
                             Price
                         </label>
-                        <input type="number" step="0.01" min="0" placeholder="Enter price"
+                        <input id="price" type="number" step="0.01" min="0" placeholder="Enter price"
                             {...register("price", {
                                 required: true,
                                 min: 0

@@ -28,7 +28,7 @@ const CategoryForm = ({ methods, onFormReset, onFormSubmit }) => {
                         <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                             Name
                         </label>
-                        <input type="text" placeholder="Enter name"
+                        <input id="name" type="text" placeholder="Enter name"
                             {...register("name", {
                                 required: true,
                                 maxLength: 50
@@ -50,7 +50,7 @@ const CategoryForm = ({ methods, onFormReset, onFormSubmit }) => {
                         <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
                             Description
                         </label>
-                        <input type="text" placeholder="Enter last name"
+                        <input id="description" type="text" placeholder="Enter last name"
                             {...register("description", {
                                 required: true,
                                 maxLength: 500
@@ -73,7 +73,7 @@ const CategoryForm = ({ methods, onFormReset, onFormSubmit }) => {
                         <label htmlFor="code" className="block text-sm font-semibold text-gray-700 mb-2">
                             Code
                         </label>
-                        <input type="text"
+                        <input id="code" type="text"
                             {...register("code", {
                                 required: false,
                                 maxLength: 30
@@ -82,7 +82,7 @@ const CategoryForm = ({ methods, onFormReset, onFormSubmit }) => {
 
                         {errors.code?.type === 'maxLength' &&
                             <p className="mt-1 text-sm text-red-600 flex items-center">
-                                code can not exceed 50 characters
+                                code can not exceed 30 characters
                             </p>}
                     </div>
 
