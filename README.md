@@ -104,6 +104,26 @@ La aplicación estará disponible en:
 | API (HTTP) | http://localhost:5295 |
 | API (HTTPS) | https://localhost:7049 |
 
+## 🧪 Ejecutar Tests
+
+Los tests del Backend y del Frontend se ejecutan por separado desde la raíz del repositorio:
+
+- **Backend** (.NET):
+
+```powershell
+dotnet test .\Tests\eCommerce.Tests.csproj
+```
+
+- **Frontend** (Vitest): requiere haber instalado previamente las dependencias con `npm ci` en `src/Frontend`.
+
+```powershell
+npm --prefix .\src\Frontend test
+```
+
+> 🚦En Visual Studio también puedes ejecutar los tests (sólo para los de Backend) haciendo click derecho sobre la solución o el proyecto de Tests, y seleccionando **Ejecutar pruebas**
+
+Los resultados de cada suite se muestran en la consola. Vitest informa de los archivos y casos ejecutados, y de si pasan o fallan.
+
 ## 📁 Estructura del repositorio
 
 ```text
