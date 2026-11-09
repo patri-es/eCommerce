@@ -9,9 +9,9 @@ export default defineConfig({
         open: true
     },
     test: {
-        include: ['Tests/Frontend/**/*.{test,spec}.{js,jsx}'],
+        include: ['tests/**/*.{test,spec}.{js,jsx}'],
         environment: 'jsdom',
-        setupFiles: './Tests/Frontend/setup.js',
+        setupFiles: './tests/setup.js',
         clearMocks: true,
         restoreMocks: true
     }

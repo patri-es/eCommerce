@@ -117,7 +117,8 @@ dotnet test .\Tests\eCommerce.Tests.csproj
 - **Frontend** (Vitest): requiere haber instalado previamente las dependencias con `npm ci` en `src/Frontend`.
 
 ```powershell
-npm --prefix .\src\Frontend test
+cd .\src\Frontend
+npm test
 ```
 
 > 🚦En Visual Studio también puedes ejecutar los tests (sólo para los de Backend) haciendo click derecho sobre la solución o el proyecto de Tests, y seleccionando **Ejecutar pruebas**
@@ -161,6 +162,12 @@ eCommerce/
         │   ├── assets/
         │   ├── components/
         │   └── pages/
+        ├── tests/
+        │   ├── categories/
+        │   ├── navigation/
+        │   ├── products/
+        │   ├── services/
+        │   └── utils/
         ├── .env.local          # Configuración local (no versionada)
         ├── package.json
         ├── package-lock.json
