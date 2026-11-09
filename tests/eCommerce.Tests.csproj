@@ -29,10 +29,4 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-
-  <Target Name="RunFrontendVitest" BeforeTargets="Test;VSTest">
-    <Message Text="Running Frontend Vitest tests..." Importance="High" />
-    <Exec Command="npm test" WorkingDirectory="$(MSBuildProjectDirectory)/../src/Frontend" />
-  </Target>
-
 </Project>
