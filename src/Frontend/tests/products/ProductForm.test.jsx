@@ -33,10 +33,10 @@ describe('ProductForm', () => {
         const onSubmit = vi.fn()
         render(<ProductFormHarness onSubmit={onSubmit} />)
 
-        fireEvent.change(screen.getByPlaceholderText('Enter name'), { target: { value: 'Desk lamp' } })
-        fireEvent.change(screen.getByPlaceholderText('Enter description'), { target: { value: 'LED lamp' } })
-        fireEvent.change(screen.getByPlaceholderText('Enter image URL'), { target: { value: 'https://example.test/lamp.png' } })
-        fireEvent.change(screen.getByPlaceholderText('Enter price'), { target: { value: '24.50' } })
+        fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Desk lamp' } })
+        fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'LED lamp' } })
+        fireEvent.change(screen.getByLabelText('Image URL'), { target: { value: 'https://example.test/lamp.png' } })
+        fireEvent.change(screen.getByLabelText('Price'), { target: { value: '24.50' } })
         fireEvent.click(screen.getByTitle('Save product'))
 
         await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({

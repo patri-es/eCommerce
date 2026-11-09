@@ -57,8 +57,8 @@ describe('ProductCatalog and ProductFilters', () => {
         await screen.findByRole('option', { name: 'Books' })
 
         fireEvent.change(screen.getByLabelText('Categorías'), { target: { value: '2' } })
-        fireEvent.click(screen.getByLabelText('Solo disponibles'))
-        fireEvent.click(screen.getByLabelText('Solo con stock'))
+        fireEvent.click(screen.getByRole('checkbox', { name: /Solo disponibles/ }))
+        fireEvent.click(screen.getByRole('checkbox', { name: /Solo con stock/ }))
 
         await waitFor(() => {
             expect(getProducts).toHaveBeenLastCalledWith({
@@ -81,7 +81,9 @@ describe('ProductCatalog and ProductFilters', () => {
         await screen.findByText('Expensive item')
         fireEvent.change(screen.getByLabelText('Ordenar por precio'), { target: { value: 'asc' } })
 
-        const displayedItems = screen.getByText('Affordable item').closest('div.grid').querySelectorAll('h2')
-        expect(Array.from(displayedItems, item => item.textContent)).toEqual(['Affordable item', 'Expensive item'])
+        await waitFor(() => {
+            const displayedItems = screen.getByText('Affordable item').closest('div.grid').querySelectorAll('h2')
+            expect(Array.from(displayedItems, item => item.textContent)).toEqual(['Affordable item', 'Expensive item'])
+        })
     })
 })

@@ -22,8 +22,8 @@ describe('CategoryForm', () => {
 
         fireEvent.submit(container.querySelector('form'))
 
-        expect(await screen.findByText('name is  required')).toBeInTheDocument()
-        expect(screen.getByText('description is  required')).toBeInTheDocument()
+        expect(await screen.findByText(/name is required/)).toBeInTheDocument()
+        expect(screen.getByText(/description is required/)).toBeInTheDocument()
         expect(onSubmit).not.toHaveBeenCalled()
     })
 
@@ -39,8 +39,8 @@ describe('CategoryForm', () => {
         const onSubmit = vi.fn()
         const { container } = render(<CategoryFormHarness onSubmit={onSubmit} />)
 
-        fireEvent.change(screen.getByPlaceholderText('Enter name'), { target: { value: 'Stationery' } })
-        fireEvent.change(screen.getByPlaceholderText('Enter last name'), { target: { value: 'Office supplies' } })
+        fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Stationery' } })
+        fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'Office supplies' } })
         fireEvent.change(screen.getByLabelText('Code'), { target: { value: 'OFFICE' } })
         fireEvent.submit(container.querySelector('form'))
 
