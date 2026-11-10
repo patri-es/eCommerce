@@ -12,6 +12,9 @@
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
+  </ItemGroup>
   <Target Name="NpmInstall" BeforeTargets="Build;Restore" Condition="Exists('$(MSBuildProjectDirectory)\\package.json')">
 	<Message Text="Running npm install in frontend folder..." Importance="High" />
 	<Exec Command="npm install" WorkingDirectory="$(MSBuildProjectDirectory)" />

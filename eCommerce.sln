@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.API", "src\API\eCommerce.API.csproj", "{3A65FB79-E25B-4CD2-B027-2171F75FC9C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Tests", "Tests\eCommerce.Tests.csproj", "{42520734-94C8-826A-A12E-05DEB674F5AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Tests", "tests\eCommerce.Tests.csproj", "{42520734-94C8-826A-A12E-05DEB674F5AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
