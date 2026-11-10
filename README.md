@@ -104,7 +104,7 @@ La aplicación estará disponible en:
 | API (HTTP) | http://localhost:5295 |
 | API (HTTPS) | https://localhost:7049 |
 
-## 🧪 Ejecutar Tests
+### 4. 🧪 Ejecutar Tests
 
 Los tests del Backend y del Frontend se ejecutan por separado desde la raíz del repositorio:
 
