@@ -20,7 +20,11 @@ public static class DependencyInjection
                 configuration.GetConnectionString("Default")));
 
          // Identity
-        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
+        {
+            options.User.RequireUniqueEmail = true;
+            options.SignIn.RequireConfirmedEmail = true;
+        })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
