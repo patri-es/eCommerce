@@ -9,8 +9,9 @@ namespace eCommerce.Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
 {
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Category> Categories { get; set; }
+    // Avoids initializing null entities.
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Category> Categories => Set<Category>();
 
     // Relationship reference in ProductCategoryConfiguration.Thanks to this, ApplyConfigurationsFromAssembly() can find the relationship.
     protected override void OnModelCreating(ModelBuilder modelBuilder)
