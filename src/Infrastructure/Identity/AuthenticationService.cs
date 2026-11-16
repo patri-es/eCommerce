@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace eCommerce.Infrastructure.Identity;
 
-namespace eCommerce.Infrastructure.Identity
+public class AuthenticationService
 {
-    internal class AuthenticationService
-    {
-    }
+
 }

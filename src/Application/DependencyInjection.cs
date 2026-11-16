@@ -3,6 +3,8 @@ using eCommerce.Application.Category;
 using eCommerce.Application.Category.Interfaces;
 using eCommerce.Application.Product;
 using eCommerce.Application.Product.Interfaces;
+using eCommerce.Application.Identity;
+
 
 namespace eCommerce.Application;
 
@@ -12,6 +14,7 @@ public static class DependencyInjection
     {
         services.AddScoped<ICategoryUseCases, CategoryUseCases>();
         services.AddScoped<IProductUseCases, ProductUseCases>();
+        services.AddScoped<AuthenticationUseCases>();
 
         return services;
     }
