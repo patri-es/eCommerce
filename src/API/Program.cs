@@ -37,9 +37,10 @@ if (!app.Environment.IsEnvironment("Testing"))
 {
     app.UseHttpsRedirection();
 }
-// CORS
+// CORS - Authentication
 app.UseCors("_myAllowSpecificOrigins");
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
