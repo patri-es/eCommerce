@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using eCommerce.Infrastructure.Identity;
-using eCommerce.Application.Category.Interfaces;
+﻿using eCommerce.Application.Category.Interfaces;
+using eCommerce.Application.Identity.Interfaces;
 using eCommerce.Application.Product.Interfaces;
+using eCommerce.Infrastructure.Identity;
 using eCommerce.Infrastructure.Persistence;
 using eCommerce.Infrastructure.Persistence.Repositories;
-using eCommerce.Application.Identity.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.Infrastructure;
 
@@ -42,9 +43,14 @@ public static class DependencyInjection
 
         services.ConfigureApplicationCookie(options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+            options.Cookie.Name = "eCommerce.Auth";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.None;
+
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
             options.SlidingExpiration = true;
-            
+
         });
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();
