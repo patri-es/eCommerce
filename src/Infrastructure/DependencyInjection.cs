@@ -23,10 +23,29 @@ public static class DependencyInjection
         services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
         {
             options.User.RequireUniqueEmail = true;
+            
             options.SignIn.RequireConfirmedEmail = true;
+            //options.SignIn.RequireConfirmedAccount = true;
+
+            options.Password.RequiredLength = 10;
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+            options.Lockout.MaxFailedAccessAttempts = 5;
+
         })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+            options.SlidingExpiration = true;
+            
+        });
 
         // Repositories
         services.AddScoped<IProductRepository, ProductRepository>();
