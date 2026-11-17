@@ -1,23 +1,23 @@
-﻿// interceptor de Axios
-// este documento será el que defina cómo el Front se comunica con la API del back
+﻿// Axios instance
+// This file centralizes communication between the frontend and the API.
 
 import axios from "axios"
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_BASE_API_URL, //     baseURL: "https://localhost:7049/api",
+    baseURL: import.meta.env.VITE_BASE_API_URL,
     headers: {
         "Content-Type": "application/json"
     },
     paramsSerializer: {
         indexes: null
     },
-    timeout: 10000
+    timeout: 10000,
+    withCredentials: true
 })
+
 // Request interceptor
 api.interceptors.request.use(
     (config) => {
-        // La autenticación se añadirá aquí posteriormente. 
-        // Por ejemplo: config.headers.Authorization = `Bearer ${token}`
         return config
     },
     (error) => {
