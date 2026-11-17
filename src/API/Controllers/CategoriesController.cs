@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using eCommerce.Application.Category;
-using eCommerce.Application.Category.Interfaces;
+﻿using eCommerce.Application.Category;
 using eCommerce.Application.Category.DTOs;
+using eCommerce.Application.Category.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.API.Controllers;
 
@@ -22,6 +23,7 @@ public class CategoriesController(ICategoryUseCases categoryUseCases) : Controll
     /// </summary>
     // GET /api/categories
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult> GetCategories()
     {
         var categories = await _categoryUseCases.GetCategories();
@@ -33,6 +35,7 @@ public class CategoriesController(ICategoryUseCases categoryUseCases) : Controll
     /// </summary>
     // GET /api/categories/id
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetCategory(int id)
     {
         var category = await _categoryUseCases.GetCategoryById(id);
@@ -48,6 +51,7 @@ public class CategoriesController(ICategoryUseCases categoryUseCases) : Controll
     /// </summary>
     // POST /api/categories
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddCategory(CreateCategoryDTO category)
     {
         await _categoryUseCases.CreateCategory(category);
@@ -59,6 +63,7 @@ public class CategoriesController(ICategoryUseCases categoryUseCases) : Controll
     /// </summary>
     // PUT /api/categories/1
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryDTO category)
     {
         await _categoryUseCases.UpdateCategory(id, category);
@@ -70,6 +75,7 @@ public class CategoriesController(ICategoryUseCases categoryUseCases) : Controll
     /// </summary>
     // Delete /api/categories/1
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteCategory(int id)
     {
         await _categoryUseCases.DeleteCategory(id);
