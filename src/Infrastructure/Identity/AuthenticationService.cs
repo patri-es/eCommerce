@@ -17,7 +17,7 @@ public class AuthenticationService(SignInManager<ApplicationUser> signInManager,
                 user,
                 password,
                 isPersistent: false,
-                lockoutOnFailure: true
+                lockoutOnFailure: true // allows Identity to increment the failed-attempt counter
             );
 
         if (result.Succeeded)

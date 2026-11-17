@@ -23,20 +23,19 @@ public static class DependencyInjection
          // Identity
         services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
         {
+            // User
             options.User.RequireUniqueEmail = true;
-            
+            // Sign-in
             options.SignIn.RequireConfirmedEmail = true;
-            //options.SignIn.RequireConfirmedAccount = true;
-
+            // Password
             options.Password.RequiredLength = 10;
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = true;
             options.Password.RequireUppercase = true;
             options.Password.RequireNonAlphanumeric = true;
-
+            // Lockout
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
             options.Lockout.MaxFailedAccessAttempts = 5;
-
         })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
