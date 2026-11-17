@@ -7,6 +7,7 @@ using eCommerce.Application.Category.Interfaces;
 using eCommerce.Application.Product.Interfaces;
 using eCommerce.Infrastructure.Persistence;
 using eCommerce.Infrastructure.Persistence.Repositories;
+using eCommerce.Application.Identity.Interfaces;
 
 namespace eCommerce.Infrastructure;
 
@@ -47,6 +48,8 @@ public static class DependencyInjection
             
         });
 
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        //services.AddScoped<AuthenticationService>();
         // Repositories
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
