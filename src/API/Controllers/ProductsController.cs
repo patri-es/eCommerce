@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using eCommerce.Application.Product;
+﻿using eCommerce.Application.Product;
 using eCommerce.Application.Product.DTOs;
 using eCommerce.Application.Product.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace eCommerce.API.Controllers;
@@ -20,6 +21,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     /// </summary>
     // GET /api/products
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<List<ProductDTO>>> GetProducts([FromQuery] FiltersProductDTO? filters)
     {
         var products = await _productUseCases.GetProducts(filters);
@@ -29,6 +31,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Get Product by Id 
     // GET /api/products/id
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ProductDTO>> GetProduct(int id) 
     { 
         var product = await _productUseCases.GetProductById(id);
@@ -43,6 +46,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Add new product
     // POST /api/products
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> CreateProduct([FromBody] CreateProductDTO product)
     {
         await _productUseCases.CreateProduct(product);
@@ -53,6 +57,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Delete Product
     // DELETE /api/products/id
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProduct(int id) 
     {
         await _productUseCases.DeleteProduct(id);
@@ -62,6 +67,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Update Product
     // PATCH /api/products/id
     [HttpPatch("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> UpdateProduct(int id, [FromBody] UpdateProductDTO product)
     {
         await _productUseCases.UpdateProduct(id, product);
@@ -75,6 +81,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Change availability of product
     // POST /api/products/id/activate
     [HttpPost("{id:int}/activate")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> ActivateProduct(int id)
     {
         await _productUseCases.ActivateProduct(id);
@@ -83,6 +90,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
 
     // POST /api/products/id/deactivate
     [HttpPost("{id:int}/deactivate")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeactivateProduct(int id)
     {
         await _productUseCases.DeactivateProduct(id);
@@ -92,6 +100,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Change Stock of product
     // POST /api/products/id/stock/increase
     [HttpPost("{id:int}/stock/increase")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> IncreaseStock(int id, [FromBody] ChangeStockDTO dto)
     {
         await _productUseCases.IncreaseProductStock(id, dto.Quantity);
@@ -100,6 +109,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
 
     // POST /api/products/id/stock/decrease
     [HttpPost("{id:int}/stock/decrease")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DecreaseStock(int id, [FromBody] ChangeStockDTO dto)
     {
         await _productUseCases.DecreaseProductStock(id, dto.Quantity);
@@ -109,6 +119,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
     // Change categories of product
     // POST /api/products/id/categories/id
     [HttpPost("{productId:int}/categories/{categoryId:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> AsignProductCategory(int productId, int categoryId)
     {
         await _productUseCases.AssignProductCategory(productId, categoryId);
@@ -117,6 +128,7 @@ public class ProductsController(IProductUseCases productUseCases) : ControllerBa
 
     // DELETE /api/products/id/categories/id
     [HttpDelete("{productId:int}/categories/{categoryId:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> RemoveProductCategory(int productId, int categoryId)
     {
         await _productUseCases.RemoveProductCategory(productId, categoryId);
