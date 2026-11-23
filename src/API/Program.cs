@@ -1,6 +1,7 @@
 using eCommerce.API.Exceptions;
 using eCommerce.Application;
 using eCommerce.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,10 @@ builder.Services.AddAntiforgery(options =>
 });
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
