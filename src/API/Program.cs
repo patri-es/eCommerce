@@ -21,6 +21,18 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+// Antiforgery
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-CSRF-TOKEN";
+
+    options.Cookie.Name = "eCommerce.Antiforgery";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
+});
+
 // Controllers
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

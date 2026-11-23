@@ -1,5 +1,4 @@
-﻿// Axios instance
-// This file centralizes communication between the frontend and the API.
+﻿// Axios instance - This file centralizes communication between the frontend and the API.
 
 import axios from "axios"
 
