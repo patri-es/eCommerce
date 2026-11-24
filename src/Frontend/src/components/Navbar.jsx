@@ -3,7 +3,7 @@ import { Menu, X, User, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from "react-router";
 
-const Navbar = () => {
+const Navbar = ({ currentUser, onLoginClick }) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -86,14 +86,20 @@ const Navbar = () => {
 
                         {/* User Actions */}
                         <div className="flex items-center ml-auto">
-                            <button
-                                type="button"
-                                onClick={handleLogin}
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300"
-                            >
-                                <LogIn className="size-5" />
-                                Login
-                            </button>
+                            {currentUser ? (
+                                <span className="text-sm font-medium text-gray-700">
+                                    Hola {currentUser.userName}
+                                </span>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={onLoginClick}
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300"
+                                >
+                                    <LogIn className="size-5" />
+                                    Iniciar sesión
+                                </button>
+                            )}
                         </div>
 
                     </nav>
@@ -184,14 +190,20 @@ const Navbar = () => {
 
                     {/* User Actions */}
                     <div className="border-t border-gray-200 mt-2 pt-2">
-                        <button
-                            type="button"
-                            onClick={handleLogin}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm transition-all duration-200"
-                        >
-                            <LogIn className="size-5" />
-                            Login
-                        </button>
+                        {currentUser ? (
+                            <span className="text-sm font-medium text-gray-700">
+                                Hola {currentUser.userName}
+                            </span>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={handleLogin}
+                                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm transition-all duration-200"
+                            >
+                                <LogIn className="size-5" />
+                                Login
+                            </button>
+                        )}
                     </div>
 
                 </div>
