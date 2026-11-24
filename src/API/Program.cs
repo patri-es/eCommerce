@@ -35,10 +35,11 @@ builder.Services.AddAntiforgery(options =>
 });
 
 // Controllers
-builder.Services.AddControllers(options =>
+builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
