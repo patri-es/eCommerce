@@ -1,6 +1,11 @@
 ﻿// Axios instance - This file centralizes communication between the frontend and the API.
-
 import axios from "axios"
+
+let csrfToken = null
+
+export const setCsrfToken = (token) => {
+    csrfToken = token
+}
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_BASE_API_URL,
@@ -17,6 +22,14 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
     (config) => {
+        const method = config.method?.toUpperCase()
+
+        const unsafeMethods = ["POST", "PUT", "PATCH", "DELETE"]
+
+        if (unsafeMethods.includes(method) && csrfToken) {
+            config.headers["X-CSRF-TOKEN"] = csrfToken
+        }
+
         return config
     },
     (error) => {
@@ -26,12 +39,8 @@ api.interceptors.request.use(
 
 // Response interceptor
 api.interceptors.response.use(
-    (response) => {
-        return response
-    },
-    (error) => {
-        return Promise.reject(error)
-    }
+    (response) => response,
+    (error) => Promise.reject(error)
 )
 
 export default api

@@ -1,87 +1,107 @@
-import { Menu, X } from 'lucide-react';
-import { User } from 'lucide-react';
+
+import { Menu, X, User, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from "react-router";
 
-const Navbar = () => {
-
-    //const activeLink = 'Home';
+const Navbar = ({ currentUser, onLoginClick }) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // Temporary handler until LoginModal is implemented
+    const handleLogin = () => {
+        console.log("Open login modal");
+        setIsMenuOpen(false);
+    };
 
     return (
         <header className="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
+
                     {/* Brand Logo */}
                     <div className="flex-shrink-0 inline">
                         <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent hover:from-teal-600 hover:to-blue-600 transition-all duration-300 cursor-pointer">
                             <div className="size-8 rounded-full bg-gradient-to-b from-teal-600 via-teal-500 to-teal-400 inline-flex items-center justify-center me-2">
-                            <User className="size-6 text-white" />
-                        </div>
+                                <User className="size-6 text-white" />
+                            </div>
                             CRUD
                         </h1>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:block">
+                    {/* Desktop Navigation and User Actions */}
+                    <nav className="hidden md:flex flex-1 items-center justify-between">
+
+                        {/* Main Navigation */}
                         <div className="font-bold text-teal-700 ml-10 flex items-baseline space-x-8">
                             <NavLink
                                 to='/'
-
                                 className={({ isActive }) => `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${isActive
                                     ? 'bg-gradient-to-t from-teal-600 via-teal-500 to-teal-400 text-white shadow-lg'
                                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
                                 Home
-                            </ NavLink>
+                            </NavLink>
 
                             <NavLink
                                 to='/about'
-
                                 className={({ isActive }) => `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${isActive
                                     ? 'bg-gradient-to-t from-teal-600 via-teal-500 to-teal-400 text-white shadow-lg'
                                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
                                 About
-                            </ NavLink>
+                            </NavLink>
 
                             <NavLink
                                 to='/person'
-
                                 className={({ isActive }) => `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${isActive
                                     ? 'bg-gradient-to-t from-teal-600 via-teal-500 to-teal-400 text-white shadow-lg'
                                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
                                 Person
-                            </ NavLink>
+                            </NavLink>
 
                             <NavLink
                                 to='/product'
-
                                 className={({ isActive }) => `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${isActive
                                     ? 'bg-gradient-to-t from-teal-600 via-teal-500 to-teal-400 text-white shadow-lg'
                                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
                                 Product
-                            </ NavLink>
+                            </NavLink>
 
                             <NavLink
                                 to='/category'
-
                                 className={({ isActive }) => `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${isActive
                                     ? 'bg-gradient-to-t from-teal-600 via-teal-500 to-teal-400 text-white shadow-lg'
                                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
                                 Category
-                            </ NavLink>
+                            </NavLink>
                         </div>
+
+                        {/* User Actions */}
+                        <div className="flex items-center ml-auto">
+                            {currentUser ? (
+                                <span className="text-sm font-medium text-gray-700">
+                                    Hola {currentUser.userName}
+                                </span>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={onLoginClick}
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300"
+                                >
+                                    <LogIn className="size-5" />
+                                    Iniciar sesión
+                                </button>
+                            )}
+                        </div>
+
                     </nav>
 
                     {/* Mobile menu button */}
@@ -90,8 +110,8 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200"
                             aria-expanded={isMenuOpen}
+                            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
                         >
-                            <span className="sr-only">Open main menu</span>
                             {isMenuOpen ? (
                                 <X className="block h-6 w-6" aria-hidden="true" />
                             ) : (
@@ -99,66 +119,93 @@ const Navbar = () => {
                             )}
                         </button>
                     </div>
+
                 </div>
             </div>
 
             {/* Mobile Navigation Menu */}
             <div
                 className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen
-                    ? 'max-h-64 opacity-100 visible'
+                    ? 'max-h-96 opacity-100 visible'
                     : 'max-h-0 opacity-0 invisible overflow-hidden'
                     }`}
             >
                 <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-gray-200">
+
+                    {/* Main Navigation */}
                     <NavLink
                         to="/"
+                        onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) => `block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive
                             ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-md transform scale-105'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm'
                             }`}
                     >
                         Home
-                    </ NavLink>
+                    </NavLink>
 
                     <NavLink
                         to="/about"
+                        onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) => `block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive
                             ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-md transform scale-105'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm'
                             }`}
                     >
                         About
-                    </ NavLink>
+                    </NavLink>
 
                     <NavLink
                         to="/person"
+                        onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) => `block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive
                             ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-md transform scale-105'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm'
                             }`}
                     >
                         Person
-                    </ NavLink>
-
+                    </NavLink>
 
                     <NavLink
-                        to='/product'
+                        to="/product"
+                        onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) => `block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive
                             ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-md transform scale-105'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm'
                             }`}
                     >
                         Product
-                    </ NavLink>
+                    </NavLink>
+
                     <NavLink
-                        to='/category'
+                        to="/category"
+                        onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) => `block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive
                             ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-md transform scale-105'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm'
                             }`}
                     >
                         Category
-                    </ NavLink>
+                    </NavLink>
+
+                    {/* User Actions */}
+                    <div className="border-t border-gray-200 mt-2 pt-2">
+                        {currentUser ? (
+                            <span className="text-sm font-medium text-gray-700">
+                                Hola {currentUser.userName}
+                            </span>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={handleLogin}
+                                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-sm transition-all duration-200"
+                            >
+                                <LogIn className="size-5" />
+                                Login
+                            </button>
+                        )}
+                    </div>
+
                 </div>
             </div>
 
